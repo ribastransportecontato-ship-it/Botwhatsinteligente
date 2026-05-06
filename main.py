@@ -4,7 +4,7 @@ import json
 from groq import Groq
 
 # Sua chave da Groq configurada
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")"
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 # Inicializa o cliente da Groq
 client = Groq(api_key=GROQ_API_KEY)
