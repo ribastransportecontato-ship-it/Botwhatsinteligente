@@ -1,16 +1,13 @@
 import streamlit as st
 import os
 import json
-import google.generativeai as genai
+from google import genai # Nova biblioteca
 
-# Configuração da sua Chave que você enviou
+# Configuração da sua Chave
 GOOGLE_API_KEY = "AIzaSyCkCY0C6iehoiybkzrxAzvyh5aV9SwUKyE"
-genai.configure(api_key=GOOGLE_API_KEY)
+client = genai.Client(api_key=GOOGLE_API_KEY)
 
-# Configuração do modelo (Gemini 1.5 Flash é rápido e bom)
-model = genai.GenerativeModel('gemini-pro')
-
-st.set_page_config(page_title="Imperium IA - Humana", layout="wide")
+st.set_page_config(page_title="Imperium IA - Atendimento", layout="wide")
 
 class ImperiumHumano:
     def __init__(self):
@@ -39,9 +36,7 @@ bot = ImperiumHumano()
 bot.carregar_aprendizado()
 
 st.title("🤖 Imperium Bot - Atendimento Inteligente")
-st.caption("Agora converso de forma humana usando sua base de dados!")
 
-# Histórico da conversa
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -49,20 +44,16 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Campo de Chat
 if prompt := st.chat_input("Como posso te ajudar?"):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        # Criamos a instrução de personalidade para a IA
+        # Instrução para a IA agir como humano usando sua base
         contexto_prompt = f"""
-        Você é o assistente humano da Imperium TV. Seu nome é Imperium Bot.
-        Você deve ser educado, prestativo e conversar de forma natural.
-        
-        Use as informações abaixo (que são seus manuais e fluxos) para responder ao cliente.
-        Se não encontrar a informação, diga que vai encaminhar para o suporte humano.
+        Você é o assistente humano da Imperium TV. 
+        Use as informações abaixo para responder ao cliente de forma amigável.
         
         BASE DE CONHECIMENTO:
         {bot.conhecimento}
@@ -72,7 +63,11 @@ if prompt := st.chat_input("Como posso te ajudar?"):
         """
         
         try:
-            response = model.generate_content(contexto_prompt)
+            # Comando atualizado para a versão 2026 da API
+            response = client.models.generate_content(
+                model="gemini-1.5-flash", 
+                contents=contexto_prompt
+            )
             texto_resposta = response.text
             st.markdown(texto_resposta)
             st.session_state.messages.append({"role": "assistant", "content": texto_resposta})
