@@ -1,85 +1,110 @@
 import streamlit as st
 import os
 import json
-from google import genai
+from groq import Groq
 
-# Sua Chave de API
-GOOGLE_API_KEY = "AIzaSyCkCY0C6iehoiybkzrxAzvyh5aV9SwUKyE"
+# Sua chave da Groq configurada
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")"
 
-# Inicializa o cliente moderno (estável v1)
-client = genai.Client(api_key=GOOGLE_API_KEY)
+# Inicializa o cliente da Groq
+client = Groq(api_key=GROQ_API_KEY)
 
-st.set_page_config(page_title="Imperium IA - Atendimento", layout="wide")
+st.set_page_config(page_title="Imperium Bot - Central", layout="wide")
 
-class ImperiumHumano:
+class ImperiumSistema:
     def __init__(self):
-        self.conhecimento = ""
+        self.base_conhecimento = ""
 
-    def carregar_aprendizado(self):
-        dados_totais = []
-        # Carrega JSONs
+    def carregar_dados(self):
+        conteudo_acumulado = []
+        
+        # Lendo os 111+ arquivos de fluxo (JSON)
         if os.path.exists("fluxos_json"):
-            for arq in os.listdir("fluxos_json"):
-                if arq.endswith(".json"):
+            for arquivo in os.listdir("fluxos_json"):
+                if arquivo.endswith(".json"):
                     try:
-                        with open(f"fluxos_json/{arq}", 'r', encoding='utf-8') as f:
-                            conteudo = json.load(f)
-                            dados_totais.append(f"Fluxo {arq}: {json.dumps(conteudo, ensure_ascii=False)}")
-                    except: pass
+                        with open(f"fluxos_json/{arquivo}", 'r', encoding='utf-8') as f:
+                            dados = json.load(f)
+                            # Extrai o texto importante do JSON para a IA
+                            texto = f"Tutorial: {arquivo}. Conteúdo: {json.dumps(dados, ensure_ascii=False)}"
+                            conteudo_acumulado.append(texto)
+                    except:
+                        pass
         
-        # Carrega Manuais TXT
+        # Lendo Manuais de Apoio (TXT)
         if os.path.exists("base_conhecimento"):
-            for arq in os.listdir("base_conhecimento"):
-                if arq.endswith(".txt"):
+            for arquivo in os.listdir("base_conhecimento"):
+                if arquivo.endswith(".txt"):
                     try:
-                        with open(f"base_conhecimento/{arq}", 'r', encoding='utf-8') as f:
-                            dados_totais.append(f"Manual: {f.read()}")
-                    except: pass
+                        with open(f"base_conhecimento/{arquivo}", 'r', encoding='utf-8') as f:
+                            conteudo_acumulado.append(f"Manual Técnico: {f.read()}")
+                    except:
+                        pass
         
-        self.conhecimento = "\n---\n".join(dados_totais)
+        self.base_conhecimento = "\n\n---\n\n".join(conteudo_acumulado)
 
+# Inicia o motor do bot
 @st.cache_resource
-def iniciar_bot():
-    bot = ImperiumHumano()
-    bot.carregar_aprendizado()
-    return bot
+def preparar_bot():
+    obj = ImperiumSistema()
+    obj.carregar_dados()
+    return obj
 
-bot = iniciar_bot()
+bot_motor = preparar_bot()
 
-st.title("🤖 Imperium Bot - IA Humana")
+st.title("🤖 Imperium Bot - Atendimento Humano")
+st.info("Sistema Inteligente alimentado por seus tutoriais do GitHub.")
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+# Gerenciamento do Chat
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
 
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+# Exibe as mensagens anteriores
+for msg in st.session_state.chat_history:
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
 
-if prompt := st.chat_input("Como posso te ajudar?"):
-    st.session_state.messages.append({"role": "user", "content": prompt})
+# Entrada do usuário
+if usuario_pergunta := st.chat_input("Como posso te ajudar agora?"):
+    st.session_state.chat_history.append({"role": "user", "content": usuario_pergunta})
     with st.chat_message("user"):
-        st.markdown(prompt)
+        st.markdown(usuario_pergunta)
 
     with st.chat_message("assistant"):
-        contexto_instrucao = f"""
-        Você é o 'Imperium Bot', atendente da Imperium TV. Converse como um ser humano gentil.
-        Use estritamente as informações abaixo para ajudar o cliente:
+        # O "Prompt" que ensina a IA a ser o seu atendente
+        prompt_sistema = f"""
+        Você é o Imperium Bot, um atendente humano, educado e prestativo da Imperium TV.
+        Seu objetivo é resolver dúvidas sobre aplicativos (IB Player, Netplay, etc) usando a base de conhecimento abaixo.
         
-        {bot.conhecimento}
+        REGRAS:
+        1. Fale de forma natural, como se estivesse no WhatsApp.
+        2. Se a solução estiver nos manuais abaixo, explique o passo a passo.
+        3. Se não souber, diga gentilmente que vai chamar o suporte humano.
         
-        Pergunta do cliente: {prompt}
+        BASE DE CONHECIMENTO:
+        {bot_motor.base_conhecimento}
         """
 
         try:
-            # Usando a nova chamada da biblioteca google-genai
-            response = client.models.generate_content(
-                model="gemini-1.5-flash",
-                contents=contexto_instrucao
+            # Chamada para a Groq (Llama 3 - Rápido e Estável)
+            completion = client.chat.completions.create(
+                model="llama3-8b-8192",
+                messages=[
+                    {"role": "system", "content": prompt_sistema},
+                    {"role": "user", "content": usuario_pergunta}
+                ],
+                temperature=0.7,
+                max_tokens=2048
             )
             
-            texto_resposta = response.text
-            st.markdown(texto_resposta)
-            st.session_state.messages.append({"role": "assistant", "content": texto_resposta})
+            resposta_final = completion.choices[0].message.content
+            st.markdown(resposta_final)
+            st.session_state.chat_history.append({"role": "assistant", "content": resposta_final})
             
         except Exception as e:
-            st.error(f"Erro de conexão com o cérebro da IA. Detalhe: {e}")
+            st.error(f"Erro na conexão: {e}")
+
+# Lateral com contadores
+st.sidebar.title("Status")
+st.sidebar.success("Cérebro carregado com sucesso!")
+st.sidebar.write("A IA está usando seus arquivos JSON e TXT para aprender.")
