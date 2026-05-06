@@ -8,7 +8,7 @@ GOOGLE_API_KEY = "AIzaSyCkCY0C6iehoiybkzrxAzvyh5aV9SwUKyE"
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Configuração do modelo (Gemini 1.5 Flash é rápido e bom)
-model = genai.GenerativeModel('gemini-1.5-flash-latest')
+model = genai.GenerativeModel('gemini-pro')
 
 st.set_page_config(page_title="Imperium IA - Humana", layout="wide")
 
