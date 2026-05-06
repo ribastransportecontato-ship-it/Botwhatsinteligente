@@ -1,59 +1,41 @@
 import streamlit as st
 import os
 import json
-from google import genai
+import google.generativeai as genai
 
-# Puxa a chave do Environment do Render
+# Puxa a chave do Render (Verifique se não há espaços extras lá no painel!)
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-# Inicializa o cliente
-client = genai.Client(api_key=GOOGLE_API_KEY)
+# Configura a IA
+genai.configure(api_key=GOOGLE_API_KEY)
 
-st.set_page_config(page_title="Imperium Bot - Final", layout="wide")
-
-class ImperiumCerebro:
-    def __init__(self):
-        self.conhecimento_total = ""
-
-    def carregar_arquivos(self):
-        textos = []
-        if os.path.exists("fluxos_json"):
-            for arquivo in os.listdir("fluxos_json"):
-                if arquivo.endswith(".json"):
-                    try:
-                        with open(f"fluxos_json/{arquivo}", 'r', encoding='utf-8') as f:
-                            dados = json.load(f)
-                            textos.append(f"APP: {arquivo}\nGUIA: {json.dumps(dados, ensure_ascii=False)}")
-                    except: pass
-        self.conhecimento_total = "\n\n---\n\n".join(textos)
+st.set_page_config(page_title="Imperium Bot", layout="wide")
 
 @st.cache_resource
-def iniciar_ia():
-    obj = ImperiumCerebro()
-    obj.carregar_arquivos()
-    return obj
+def carregar_contexto():
+    pasta = "fluxos_json"
+    contexto = ""
+    if os.path.exists(pasta):
+        arquivos = [f for f in os.listdir(pasta) if f.endswith(".json")]
+        for arq in arquivos[:48]: # Garante que lê seus 48 arquivos
+            try:
+                with open(os.path.join(pasta, arq), 'r', encoding='utf-8') as f:
+                    conteudo = f.read()
+                    contexto += f"\nGuia {arq}: {conteudo}"
+            except:
+                pass
+    return contexto[:30000] # Limite de segurança para o modelo Flash
 
-bot = iniciar_ia()
+contexto_bot = carregar_contexto()
 
-# --- FUNÇÃO PARA DESCOBRIR O NOME DO MODELO ---
-def get_model_name():
-    try:
-        # Lista os modelos disponíveis na sua conta
-        for m in client.models.list():
-            if 'generateContent' in m.supported_methods and 'flash' in m.name:
-                return m.name # Retorna o primeiro Flash que encontrar (ex: models/gemini-1.5-flash-002)
-        return "gemini-1.5-flash" # Fallback
-    except:
-        return "gemini-1.5-flash"
-
-st.title("🤖 Imperium Bot - Inteligência Ativa")
+st.title("🤖 Imperium Bot")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-for m in st.session_state.messages:
-    with st.chat_message(m["role"]):
-        st.markdown(m["content"])
+for msg in st.session_state.messages:
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
 
 if prompt := st.chat_input("Como posso ajudar?"):
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -62,26 +44,18 @@ if prompt := st.chat_input("Como posso ajudar?"):
 
     with st.chat_message("assistant"):
         try:
-            # Descobre o nome que o Google quer usar hoje
-            modelo_ativo = get_model_name()
+            # Usando o modelo generativo padrão
+            model = genai.GenerativeModel('gemini-1.5-flash')
             
-            contexto_completo = f"""
-            Você é o atendente da Imperium TV. Use este guia:
-            {bot.conhecimento_total}
+            # Criando o prompt com as regras e a base
+            prompt_completo = f"Você é o atendente da Imperium TV. Use a base: {contexto_bot}\n\nPergunta: {prompt}"
             
-            Pergunta: {prompt}
-            """
-
-            response = client.models.generate_content(
-                model=modelo_ativo,
-                contents=contexto_completo
-            )
+            response = model.generate_content(prompt_completo)
             
-            resposta_texto = response.text
-            st.markdown(resposta_texto)
-            st.session_state.messages.append({"role": "assistant", "content": resposta_texto})
+            resposta = response.text
+            st.markdown(resposta)
+            st.session_state.messages.append({"role": "assistant", "content": resposta})
             
         except Exception as e:
             st.error(f"Erro na IA: {e}")
-
-st.sidebar.info(f"Modelo sendo usado: {get_model_name()}")
+            # Se der 404, o Streamlit vai nos mostrar o erro real aqui
