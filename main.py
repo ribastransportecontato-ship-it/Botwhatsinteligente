@@ -2,15 +2,12 @@ import streamlit as st
 import os
 import json
 import google.generativeai as genai
-import time
 
 # Puxa a chave do Render
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-
-# Configura a IA
 genai.configure(api_key=GOOGLE_API_KEY)
 
-st.set_page_config(page_title="Imperium Bot - Suporte", layout="wide")
+st.set_page_config(page_title="Imperium Bot - Suporte Técnico", layout="wide")
 
 class ImperiumCerebro:
     def __init__(self):
@@ -18,29 +15,28 @@ class ImperiumCerebro:
 
     def carregar_arquivos(self):
         textos = []
-        # Carrega arquivos da pasta fluxos_json
+        # Carregar arquivos JSON
         if os.path.exists("fluxos_json"):
             for arquivo in os.listdir("fluxos_json"):
                 if arquivo.endswith(".json"):
                     try:
                         with open(f"fluxos_json/{arquivo}", 'r', encoding='utf-8') as f:
                             dados = json.load(f)
-                            # Pegamos os primeiros 2000 caracteres de cada JSON para economizar cota
-                            conteudo_resumido = json.dumps(dados, ensure_ascii=False)[:2000]
-                            textos.append(f"APP: {arquivo} | GUIA: {conteudo_resumido}")
+                            # Enviamos o conteúdo mais completo agora
+                            textos.append(f"ARQUIVO: {arquivo}\nCONTEUDO: {json.dumps(dados, ensure_ascii=False)}")
                     except: pass
         
-        # Carrega Manuais TXT
+        # Carregar TXT
         if os.path.exists("base_conhecimento"):
             for arquivo in os.listdir("base_conhecimento"):
                 if arquivo.endswith(".txt"):
                     try:
                         with open(f"base_conhecimento/{arquivo}", 'r', encoding='utf-8') as f:
-                            textos.append(f"MANUAL: {f.read()[:3000]}")
+                            textos.append(f"MANUAL: {f.read()}")
                     except: pass
         
-        # Junta tudo, mas limita o total para evitar o erro 429
-        self.conhecimento_total = "\n\n".join(textos)[:150000]
+        # O Gemini 2.5 Flash Lite aguenta muito, vamos mandar até 200 mil tokens
+        self.conhecimento_total = "\n\n---\n\n".join(textos)[:200000]
 
 @st.cache_resource
 def iniciar_ia():
@@ -50,7 +46,7 @@ def iniciar_ia():
 
 bot = iniciar_ia()
 
-st.title("🤖 Imperium Bot (Gemini 2.5)")
+st.title("🤖 Suporte Imperium TV")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -65,20 +61,28 @@ if prompt := st.chat_input("Como posso ajudar?"):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
+        # REGRAS MAIS RÍGIDAS PARA EVITAR RESPOSTAS ERRADAS
         instrucao = f"""
-        Você é o suporte técnico da Imperium TV.
-        Seja curto, direto e educado.
-        Use a base abaixo para responder. Se não encontrar a solução, peça para aguardar um humano.
+        Você é o Especialista em Suporte da Imperium TV.
+        
+        SUA REGRA DE OURO:
+        1. Analise a pergunta do cliente.
+        2. Busque na base abaixo a solução EXATA para o problema citado.
+        3. Se o cliente reclama de TRAVAMENTO, foque em: limpeza de cache, troca de player ou verificação de internet.
+        4. NÃO sugira "Troca de Região" da TV a menos que o cliente diga que o app NÃO APARECE na loja.
+        5. Se não encontrar a resposta exata, diga: "Vou verificar seu caso detalhadamente com a equipe técnica, um momento."
 
-        --- BASE DE CONHECIMENTO ---
+        BASE DE DADOS:
         {bot.conhecimento_total}
         """
 
         try:
-            # Modelo que apareceu no seu painel de uso
             model = genai.GenerativeModel('gemini-2.5-flash-lite')
-            
-            response = model.generate_content([instrucao, prompt])
+            # Usamos uma temperatura menor (0.3) para ele ser mais "pé no chão" e menos criativo
+            response = model.generate_content(
+                [instrucao, prompt],
+                generation_config=genai.types.GenerationConfig(temperature=0.3)
+            )
             
             resposta_texto = response.text
             st.markdown(resposta_texto)
@@ -86,9 +90,6 @@ if prompt := st.chat_input("Como posso ajudar?"):
             
         except Exception as e:
             if "429" in str(e):
-                st.error("O Google está um pouco sobrecarregado. Por favor, aguarde 20 segundos e tente enviar novamente.")
+                st.error("Aguarde 20 segundos para a próxima pergunta.")
             else:
-                st.error(f"Ocorreu um erro: {e}")
-
-st.sidebar.success("Sistema Conectado!")
-st.sidebar.write("Dica: Evite mandar muitas mensagens por minuto para não travar a cota grátis.")
+                st.error(f"Erro: {e}")
