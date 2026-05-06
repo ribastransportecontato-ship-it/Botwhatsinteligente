@@ -7,44 +7,23 @@ from groq import Groq
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=GROQ_API_KEY)
 
-st.set_page_config(page_title="Imperium Bot - Central", layout="wide")
+st.set_page_config(page_title="Imperium Bot", layout="wide")
 
 class ImperiumSistema:
     def __init__(self):
-        self.base_conhecimento = ""
+        self.lista_temas = ""
 
     def carregar_dados(self):
-        conteudo_acumulado = []
-        
-        # Lendo os 48 arquivos de fluxo (JSON)
+        temas = []
         if os.path.exists("fluxos_json"):
             arquivos = [f for f in os.listdir("fluxos_json") if f.endswith(".json")]
             for arquivo in arquivos:
-                try:
-                    with open(f"fluxos_json/{arquivo}", 'r', encoding='utf-8') as f:
-                        dados = json.load(f)
-                        # Pegamos as partes que realmente explicam algo (keywords e respostas)
-                        # Isso economiza muito espaço para a IA
-                        info_util = {
-                            "tema": arquivo.replace(".json", ""),
-                            "conteudo": dados.get("responses", dados) 
-                        }
-                        conteudo_acumulado.append(json.dumps(info_util, ensure_ascii=False))
-                except:
-                    pass
+                # Mandamos apenas o nome do arquivo para a IA saber que o manual existe
+                nome_limpo = arquivo.replace(".json", "").replace("_", " ")
+                temas.append(nome_limpo)
         
-        # Lendo Manuais de Apoio (TXT)
-        if os.path.exists("base_conhecimento"):
-            for arquivo in os.listdir("base_conhecimento"):
-                if arquivo.endswith(".txt"):
-                    try:
-                        with open(f"base_conhecimento/{arquivo}", 'r', encoding='utf-8') as f:
-                            conteudo_acumulado.append(f.read())
-                    except:
-                        pass
-        
-        # Juntamos tudo. Com 48 arquivos, esse limite de 25k caracteres é seguro.
-        self.base_conhecimento = "\n".join(conteudo_acumulado)[:25000]
+        # Criamos um índice curto em vez de mandar o texto todo
+        self.lista_temas = ", ".join(temas)
 
 @st.cache_resource
 def preparar_bot():
@@ -54,7 +33,7 @@ def preparar_bot():
 
 bot_motor = preparar_bot()
 
-st.title("🤖 Imperium Bot - Atendimento")
+st.title("🤖 Imperium Bot")
 
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
@@ -63,25 +42,25 @@ for msg in st.session_state.chat_history:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
-if usuario_pergunta := st.chat_input("Como posso te ajudar?"):
+if usuario_pergunta := st.chat_input("Como posso ajudar?"):
     st.session_state.chat_history.append({"role": "user", "content": usuario_pergunta})
     with st.chat_message("user"):
         st.markdown(usuario_pergunta)
 
     with st.chat_message("assistant"):
         try:
-            # Envia a pergunta com o contexto dos seus 48 arquivos
+            # Mandamos apenas a lista de manuais disponíveis
+            prompt_curto = f"""Você é o atendente da Imperium TV. 
+            Você tem manuais sobre: {bot_motor.lista_temas}.
+            Responda de forma humana. Se o cliente pedir um tutorial, tente explicar baseado no nome do tema ou peça para ele ser específico."""
+
             completion = client.chat.completions.create(
                 model="llama-3.1-8b-instant",
                 messages=[
-                    {
-                        "role": "system", 
-                        "content": f"Você é o atendente da Imperium TV. Responda de forma humana e curta usando este guia: {bot_motor.base_conhecimento}"
-                    },
+                    {"role": "system", "content": prompt_curto},
                     {"role": "user", "content": usuario_pergunta}
                 ],
-                temperature=0.6,
-                max_tokens=800
+                temperature=0.7,
             )
             
             resposta_final = completion.choices[0].message.content
@@ -89,7 +68,4 @@ if usuario_pergunta := st.chat_input("Como posso te ajudar?"):
             st.session_state.chat_history.append({"role": "assistant", "content": resposta_final})
             
         except Exception as e:
-            # Se o erro de tamanho persistir, ele avisa aqui
-            st.error(f"Erro na conexão: {e}")
-
-st.sidebar.write(f"📂 {len(os.listdir('fluxos_json')) if os.path.exists('fluxos_json') else 0} arquivos carregados.")
+            st.error(f"Erro: {e}")
