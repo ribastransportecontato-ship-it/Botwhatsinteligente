@@ -1,95 +1,92 @@
-import streamlit as st
-import os
-import json
-import google.generativeai as genai
+from flask import Flask, request, jsonify
+import requests
 
-# Puxa a chave do Render
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-genai.configure(api_key=GOOGLE_API_KEY)
+app = Flask(__name__)
 
-st.set_page_config(page_title="Imperium Bot - Suporte Técnico", layout="wide")
+# --- CONFIGURAÇÕES DAS SUAS CHAVES (Vistas nos prints) ---
+APP_KEY = "f1e54647-cb4c-485e-af06-94837d5b2829"
+AUTH_KEY = "wmRL7ay3DxrOpAJ6GfWGlQDP8HjOmUye8bfTagWI21kqVVli2U"
+API_URL = "https://botbot.chat/api/v1/messages" # Verifique se este é o endpoint correto no manual da API do Botbot
 
-class ImperiumCerebro:
-    def __init__(self):
-        self.conhecimento_total = ""
+def enviar_mensagem_botbot(numero, texto):
+    """ Função para enviar a resposta de volta para o cliente via API do BotBot """
+    payload = {
+        "app_key": APP_KEY,
+        "auth_key": AUTH_KEY,
+        "to": numero,
+        "message": texto
+    }
+    try:
+        response = requests.post(API_URL, json=payload)
+        return response.status_code
+    except Exception as e:
+        print(f"Erro ao enviar mensagem: {e}")
+        return None
 
-    def carregar_arquivos(self):
-        textos = []
-        # Carregar arquivos JSON
-        if os.path.exists("fluxos_json"):
-            for arquivo in os.listdir("fluxos_json"):
-                if arquivo.endswith(".json"):
-                    try:
-                        with open(f"fluxos_json/{arquivo}", 'r', encoding='utf-8') as f:
-                            dados = json.load(f)
-                            # Enviamos o conteúdo mais completo agora
-                            textos.append(f"ARQUIVO: {arquivo}\nCONTEUDO: {json.dumps(dados, ensure_ascii=False)}")
-                    except: pass
-        
-        # Carregar TXT
-        if os.path.exists("base_conhecimento"):
-            for arquivo in os.listdir("base_conhecimento"):
-                if arquivo.endswith(".txt"):
-                    try:
-                        with open(f"base_conhecimento/{arquivo}", 'r', encoding='utf-8') as f:
-                            textos.append(f"MANUAL: {f.read()}")
-                    except: pass
-        
-        # O Gemini 2.5 Flash Lite aguenta muito, vamos mandar até 200 mil tokens
-        self.conhecimento_total = "\n\n---\n\n".join(textos)[:200000]
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    data = request.get_json()
+    
+    # Extrai a mensagem e o número do cliente (o formato depende do BotBot, ajuste se necessário)
+    msg_cliente = data.get('message', '').lower()
+    numero_cliente = data.get('from', '')
 
-@st.cache_resource
-def iniciar_ia():
-    obj = ImperiumCerebro()
-    obj.carregar_arquivos()
-    return obj
+    if not msg_cliente or not numero_cliente:
+        return jsonify({"status": "error", "message": "Dados incompletos"}), 400
 
-bot = iniciar_ia()
+    # --- REPERTÓRIO DE INTELIGÊNCIA IMPERIUM TV ---
+    resposta = ""
 
-st.title("🤖 Suporte Imperium TV")
-
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-for m in st.session_state.messages:
-    with st.chat_message(m["role"]):
-        st.markdown(m["content"])
-
-if prompt := st.chat_input("Como posso ajudar?"):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-    with st.chat_message("assistant"):
-        # REGRAS MAIS RÍGIDAS PARA EVITAR RESPOSTAS ERRADAS
-        instrucao = f"""
-        Você é o Especialista em Suporte da Imperium TV.
-        
-        SUA REGRA DE OURO:
-        1. Analise a pergunta do cliente.
-        2. Busque na base abaixo a solução EXATA para o problema citado.
-        3. Se o cliente reclama de TRAVAMENTO, foque em: limpeza de cache, troca de player ou verificação de internet.
-        4. NÃO sugira "Troca de Região" da TV a menos que o cliente diga que o app NÃO APARECE na loja.
-        5. Se não encontrar a resposta exata, diga: "Vou verificar seu caso detalhadamente com a equipe técnica, um momento."
-
-        BASE DE DADOS:
-        {bot.conhecimento_total}
-        """
-
-        try:
-            model = genai.GenerativeModel('gemini-2.5-flash-lite')
-            # Usamos uma temperatura menor (0.3) para ele ser mais "pé no chão" e menos criativo
-            response = model.generate_content(
-                [instrucao, prompt],
-                generation_config=genai.types.GenerationConfig(temperature=0.3)
+    # 1. Suporte IB PLAYER PRO (DNS/Playlist)
+    if "travando" in msg_cliente or "trava" in msg_cliente or "lento" in msg_cliente:
+        if "ib" in msg_cliente or "ibo" in msg_cliente:
+            resposta = (
+                "🔄 *SUPORTE IB PLAYER PRO*\n\n"
+                "Para resolver travamentos, siga este passo a passo:\n"
+                "1️⃣ Vá no botão **CHANGE PLAYLIST** na tela inicial.\n"
+                "2️⃣ Escolha um servidor diferente entre **IMPTV1 e IMPTV5**.\n"
+                "3️⃣ Aguarde carregar. Isso troca a rota do DNS e estabiliza o sinal!"
             )
-            
-            resposta_texto = response.text
-            st.markdown(resposta_texto)
-            st.session_state.messages.append({"role": "assistant", "content": resposta_texto})
-            
-        except Exception as e:
-            if "429" in str(e):
-                st.error("Aguarde 20 segundos para a próxima pergunta.")
-            else:
-                st.error(f"Erro: {e}")
+        # 2. Suporte NETPLAY (Sincronização)
+        elif "netplay" in msg_cliente or "ntplay" in msg_cliente:
+            resposta = (
+                "🟢 *SUPORTE NETPLAY*\n\n"
+                "Se as bolinhas estiverem vermelhas ou o canal não abrir:\n"
+                "1️⃣ No canto inferior esquerdo, digite novamente seu **Usuário e Senha**.\n"
+                "2️⃣ Clique em **ENTRAR**.\n"
+                "Isso força a sincronização com o servidor e ativa o sinal (Bolinhas Verdes)!"
+            )
+        else:
+            resposta = "🛠️ *CENTRAL DE SUPORTE*\n\nQual aplicativo você está usando? Digite *IB PLAYER* ou *NETPLAY* para eu te mandar o tutorial de correção de DNS."
+
+    # 3. Instalação (Código Downloader)
+    elif "instalar" in msg_cliente or "como baixar" in msg_cliente or "codigo" in msg_cliente:
+        resposta = (
+            "📺 *TUTORIAL DE INSTALAÇÃO*\n\n"
+            "Para Android TV, TV Box ou Fire Stick:\n"
+            "1️⃣ Baixe o app **Downloader** na loja de apps.\n"
+            "2️⃣ Digite o código de acesso: **8454237**.\n"
+            "3️⃣ O download do Netplay começará na hora!"
+        )
+
+    # 4. Financeiro e Renovação
+    elif "pagar" in msg_cliente or "vencimento" in msg_cliente or "pix" in msg_cliente:
+        resposta = (
+            "💳 *FINANCEIRO IMPERIUM*\n\n"
+            "Para renovar ou gerar seu PIX agora, acesse o painel oficial:\n"
+            "🔗 https://botibo.onrender.com/\n\n"
+            "Lembrando que os apps IB e Netplay têm uma taxa de licença anual de R$ 15,00."
+        )
+
+    # Se a IA identificou o assunto, envia a resposta técnica
+    if resposta:
+        enviar_mensagem_botbot(numero_cliente, resposta)
+        return jsonify({"status": "success", "message": "Resposta enviada"}), 200
+    
+    return jsonify({"status": "ignored", "message": "Assunto não mapeado"}), 200
+
+if __name__ == '__main__':
+    # No Render, a porta é definida pela variável de ambiente PORT
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
