@@ -1,0 +1,20 @@
+{
+    "id": 121313,
+    "keyword": "Sistema mac",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "replies": [
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "Perfeito! 🍎 Siga estes passos no seu computador Mac:\r\n\r\n1️⃣ No navegador do seu Mac, digite exatamente este link para baixar:\r\n🔗 https:\/\/dl.explouddev.com\/nplayermac\r\n\r\n2️⃣ Após o download, instale o app arrastando-o para a pasta \"Aplicativos\". 📥\r\n3️⃣ Ao abrir, use o **Usuário** e **Senha** que você registrou no Gestor.\r\n\r\n📌 **DICA:** Se o Mac bloquear a abertura, vá em Ajustes > Privacidade e Segurança e clique em \"Abrir mesmo assim\". 🍿🎬\r\n\r\n---\r\n↩️ **Dúvidas ou Menu Principal? Digite 9.**",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "id": 121312,
+    "keyword": "Sistema Windows",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "replies": [
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "Excelente! ✨ Siga estes passos no seu Computador Windows:\r\n\r\n1️⃣ No seu computador, abra o navegador e digite exatamente este link para baixar:\r\n🔗 http:\/\/dl.explouddev.com\/nplayerwin\r\n\r\n2️⃣ Após baixar, abra o arquivo e instale o Player no seu PC. 📥\r\n3️⃣ Ao abrir o app, use o **Usuário** e **Senha** que você cadastrou no Gestor.\r\n\r\n📌 **DICA:** Digite o link no computador com cuidado para não errar nenhuma letra! 😊🍿\r\n\r\n---\r\n↩️ **Dúvidas ou Menu Principal? Digite 9.**",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        }
+    ]
+}

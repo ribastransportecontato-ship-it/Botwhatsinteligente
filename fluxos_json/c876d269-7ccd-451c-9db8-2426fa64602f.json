@@ -1,0 +1,20 @@
+{
+    "id": 121314,
+    "keyword": "Sistema linux",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "replies": [
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "Tudo pronto! 🐧 Siga estes passos no seu Linux:\r\n\r\n1️⃣ No navegador do seu PC, digite exatamente este link para baixar:\r\n🔗 https:\/\/dl.explouddev.com\/nplayerlinux\r\n\r\n2️⃣ Dê permissão de execução ao arquivo baixado e instale o pacote. 📥\r\n3️⃣ Use o **Usuário** e **Senha** cadastrados no Gestor para logar.\r\n\r\n**Bom entretenimento!** 🍿🎬\r\n\r\n---\r\n↩️ **Dúvidas ou Menu Principal? Digite 9.**",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        }
+    ]
+}

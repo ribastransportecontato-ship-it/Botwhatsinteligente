@@ -1,0 +1,89 @@
+{
+    "id": 121319,
+    "keyword": "Planos e renovação",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "list_message": {
+        "title": "Planos e renovação",
+        "description": "Para planos e renovação.",
+        "buttonText": "Planos\/renovação",
+        "footerText": "",
+        "sections": [
+            {
+                "title": "🚀 ESCOLHA UMA OPÇÃO",
+                "rows": [
+                    {
+                        "title": "🎁 TESTE GRÁTIS",
+                        "description": "Ainda não conhece? Teste agora sem compromisso!",
+                        "rowId": "362ffcda-7f08-41ca-8501-d5a646c84a0b"
+                    },
+                    {
+                        "title": "💳 JÁ SOU ASSINANTE",
+                        "description": "Para quem já é assinante e já fez a primeira renovação!",
+                        "rowId": "c340b573-6d15-4758-b8fc-c7b2f4c140b6"
+                    },
+                    {
+                        "title": "👤 PRIMEIRA RENOVAÇÃO",
+                        "description": null,
+                        "rowId": "12013292-2b60-4c00-a5ee-7ca2faebbb90"
+                    },
+                    {
+                        "title": "Planos",
+                        "description": "Tabela de planos",
+                        "rowId": "00dcd6cf-6a71-4d13-92d7-b6f450d4394a"
+                    }
+                ]
+            }
+        ]
+    },
+    "list_message_replies": [
+        {
+            "row_id": "362ffcda-7f08-41ca-8501-d5a646c84a0b",
+            "reply_type": "nested_list",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_list_id": 121298,
+            "nested_list_keyword": "Teste grátis, INSTALAR"
+        },
+        {
+            "row_id": "c340b573-6d15-4758-b8fc-c7b2f4c140b6",
+            "reply_type": "text",
+            "reply_text": "👑 RENOVAÇÃO IMPERIUM TV\r\n\r\nSe você já é nosso cliente, realize sua renovação de forma automática em nosso painel:\r\n\r\n🔗 https:\/\/botibo.onrender.com\/\r\n\r\n⚠️ Caso tenha dúvidas de como pagar, volte ao Menu Inicial, acesse a Central de Tutoriais e selecione a opção: REALIZAR PAGAMENTO.",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1
+        },
+        {
+            "row_id": "12013292-2b60-4c00-a5ee-7ca2faebbb90",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 139568,
+            "nested_reply_keyword": "Primeiro pagamento!"
+        },
+        {
+            "row_id": "00dcd6cf-6a71-4d13-92d7-b6f450d4394a",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 124808,
+            "nested_reply_keyword": "Planos texto"
+        }
+    ]
+}

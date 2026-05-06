@@ -1,0 +1,53 @@
+{
+    "id": 137832,
+    "keyword": "finalizar deu certo",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "list_message": {
+        "title": "Finalização",
+        "description": "Confirme se esta tudo certo!",
+        "buttonText": "Tudo Certo?",
+        "footerText": "",
+        "sections": [
+            {
+                "title": "Tudo Certo1",
+                "rows": [
+                    {
+                        "title": "Sim",
+                        "description": "Se Abriu os Conteudos!",
+                        "rowId": "a90196c2-e40c-4655-b6ae-a89459edc6f4"
+                    },
+                    {
+                        "title": "não",
+                        "description": "não deu certo!",
+                        "rowId": "6e4ec82e-9d3f-40ec-9b3e-679f42204922"
+                    }
+                ]
+            }
+        ]
+    },
+    "list_message_replies": [
+        {
+            "row_id": "a90196c2-e40c-4655-b6ae-a89459edc6f4",
+            "reply_type": "text",
+            "reply_text": "Obrigado! qualquer coisa Chama!",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1
+        },
+        {
+            "row_id": "6e4ec82e-9d3f-40ec-9b3e-679f42204922",
+            "reply_type": "text",
+            "reply_text": "Um atendente vai atende-lo!",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1
+        }
+    ]
+}

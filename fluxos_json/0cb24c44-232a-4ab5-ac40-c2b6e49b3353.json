@@ -1,0 +1,179 @@
+{
+    "id": 121389,
+    "keyword": "dispositivos",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "list_message": {
+        "title": "Selecione o grupo de dispositivos",
+        "description": "Selecione o grupo que está seu dispositivo.",
+        "buttonText": "Selecione",
+        "footerText": "",
+        "sections": [
+            {
+                "title": "Lgs, Samsung, Roku.",
+                "rows": [
+                    {
+                        "title": "Tv Lg",
+                        "description": "Para dispositivo lg",
+                        "rowId": "460e2bd0-b23b-4aee-b6e3-77e85cbe51d4"
+                    },
+                    {
+                        "title": "Tv Samsung",
+                        "description": "Para dispositivo tv Samsung",
+                        "rowId": "e62628cd-f410-4346-99b0-a3104a488ca3"
+                    },
+                    {
+                        "title": "Tv Roku",
+                        "description": "Para dispositivo Roku",
+                        "rowId": "668af1af-c5f1-41dc-b095-0e1bafecd57c"
+                    }
+                ]
+            },
+            {
+                "title": "Androids, iOs, stick, Pc",
+                "rows": [
+                    {
+                        "title": "Tv andoid",
+                        "description": "Para tv sistema Android",
+                        "rowId": "7356234c-db0a-4a61-9576-c176aeb8e27c"
+                    },
+                    {
+                        "title": "Tv box",
+                        "description": "Para dispositivo TvBox",
+                        "rowId": "5f4d5eae-6189-4df1-b918-98720e898be1"
+                    },
+                    {
+                        "title": "Android mobile",
+                        "description": "Para smartphone Android",
+                        "rowId": "e26b2283-8fd6-447d-bc3c-7e43e6b0b52e"
+                    },
+                    {
+                        "title": "iOs iphone",
+                        "description": "Para sistema iOs iPhone",
+                        "rowId": "8d5b7a6e-c93b-4f3a-b296-75a4c5e3299f"
+                    },
+                    {
+                        "title": "fire stick",
+                        "description": "Para fire stick Amazon",
+                        "rowId": "8200ea26-5c6e-4ed2-96be-9658393811dd"
+                    },
+                    {
+                        "title": "PCs\/notebook",
+                        "description": "Para computador e notebook",
+                        "rowId": "af182ef0-0b27-4d36-a5e7-37dd9cd1e45b"
+                    }
+                ]
+            }
+        ]
+    },
+    "list_message_replies": [
+        {
+            "row_id": "460e2bd0-b23b-4aee-b6e3-77e85cbe51d4",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 121306,
+            "nested_reply_keyword": "Dispositivo lgs"
+        },
+        {
+            "row_id": "e62628cd-f410-4346-99b0-a3104a488ca3",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 121305,
+            "nested_reply_keyword": "Dispositivo sansung"
+        },
+        {
+            "row_id": "668af1af-c5f1-41dc-b095-0e1bafecd57c",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 121307,
+            "nested_reply_keyword": "Dispositivo roku"
+        },
+        {
+            "row_id": "7356234c-db0a-4a61-9576-c176aeb8e27c",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 121310,
+            "nested_reply_keyword": "Dispositivo tv Android, tutorial androidtv"
+        },
+        {
+            "row_id": "5f4d5eae-6189-4df1-b918-98720e898be1",
+            "reply_type": "nested_list",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1
+        },
+        {
+            "row_id": "e26b2283-8fd6-447d-bc3c-7e43e6b0b52e",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 121309,
+            "nested_reply_keyword": "Dispositivo Android mobile, tutorial celular"
+        },
+        {
+            "row_id": "8d5b7a6e-c93b-4f3a-b296-75a4c5e3299f",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 121308,
+            "nested_reply_keyword": "Dipositivo iphone"
+        },
+        {
+            "row_id": "8200ea26-5c6e-4ed2-96be-9658393811dd",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 121315,
+            "nested_reply_keyword": "Dispositivo fire stick, tutorial firestick"
+        },
+        {
+            "row_id": "af182ef0-0b27-4d36-a5e7-37dd9cd1e45b",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 121311,
+            "nested_reply_keyword": "Dipositivo pc"
+        }
+    ]
+}

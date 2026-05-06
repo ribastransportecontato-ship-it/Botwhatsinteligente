@@ -1,0 +1,55 @@
+{
+    "id": 137838,
+    "keyword": "CONCORDO E NAO CONCORDO",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "list_message": {
+        "title": "TERMO DE ACEITE",
+        "description": "TERMO DE ACEITE",
+        "buttonText": "TERMO DE ACEITE",
+        "footerText": "TERMO DE ACEITE",
+        "sections": [
+            {
+                "title": "TERMO DE ACEITE",
+                "rows": [
+                    {
+                        "title": "CONCORDO!",
+                        "description": "PARA CONCORDAR COM OS TERMOS",
+                        "rowId": "abeb6326-f067-4efc-9fd1-068bd909b5eb"
+                    },
+                    {
+                        "title": "NÃO CONCORDO",
+                        "description": "PARA NÃO CONCORDAR COM OS TERMOS",
+                        "rowId": "936e3bbe-9119-4b92-a322-2980d013e0e4"
+                    }
+                ]
+            }
+        ]
+    },
+    "list_message_replies": [
+        {
+            "row_id": "abeb6326-f067-4efc-9fd1-068bd909b5eb",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 137839,
+            "nested_reply_keyword": "com adulto ou sem adulto"
+        },
+        {
+            "row_id": "936e3bbe-9119-4b92-a322-2980d013e0e4",
+            "reply_type": "text",
+            "reply_text": "Entendo perfeitamente 🙏\r\n\r\nPrezamos muito pela transparência e por isso informamos todos os custos antes de você começar. Nossa prioridade é oferecer um serviço onde você não tenha dor de cabeça com travamentos, e por isso escolhemos ferramentas de elite.\r\n\r\nVou deixar nosso contato salvo aqui. Caso mude de ideia ou queira testar nosso sistema no futuro, saiba que será um prazer atendê-lo! 🚀\r\n\r\nTenha um excelente dia!",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1
+        }
+    ]
+}

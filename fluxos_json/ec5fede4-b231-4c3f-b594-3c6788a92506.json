@@ -1,0 +1,35 @@
+{
+    "id": 121317,
+    "keyword": "*****",
+    "match_type": "array",
+    "reply_type": "",
+    "active": true,
+    "device": {
+        "id": 6621,
+        "name": "Celular",
+        "phone": "554488214771",
+        "type": "WhatsApp"
+    },
+    "replies": [
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "Olá! Eu sou o Assistente Virtual da ImperiumTv. 🤖✨\r\n\r\nEstou aqui para garantir que seu atendimento seja feito com o máximo de rapidez e eficiência!\r\n\r\nPara começarmos agora mesmo, por favor, escolha uma das opções no menu abaixo: 👇",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "nested_list",
+            "delay": "2",
+            "reply": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": "121295",
+            "nested_list_id": "121295"
+        }
+    ]
+}

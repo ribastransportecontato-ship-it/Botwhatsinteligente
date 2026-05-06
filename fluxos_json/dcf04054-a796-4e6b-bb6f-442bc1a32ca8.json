@@ -1,0 +1,60 @@
+{
+    "id": 137834,
+    "keyword": "regiao LG",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "replies": [
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "*SE O APP NÃO APARECER (MUDAR REGIÃO NA LG)*",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "⚠️ NÃO ACHOU O APP? Siga isso: Vá em CONFIGURAÇÕES (Engrenagem) > GERAL > LOCALIZAÇÃO. 🛠️",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "🌍 PAÍS DE SERVIÇO: Desmarque a opção \"Automático\" e mude o país para ESTADOS UNIDOS ou MÉXICO. 🇺🇸",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "🔄 REINICIAR: A TV vai reiniciar sozinha. Depois disso, volte na loja (Sacolinha Rosa) e pesquise o app vai estar lá! ✅",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "nested_list",
+            "delay": "1",
+            "reply": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": "137833"
+        }
+    ]
+}

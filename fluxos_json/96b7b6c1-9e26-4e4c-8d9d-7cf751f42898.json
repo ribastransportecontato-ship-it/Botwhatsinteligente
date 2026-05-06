@@ -1,0 +1,68 @@
+{
+    "id": 121311,
+    "keyword": "Dipositivo pc",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "list_message": {
+        "title": "Configurar Computador",
+        "description": "Para computador.",
+        "buttonText": "Selecionar Sistema",
+        "footerText": "↩️ Digite 9 para voltar ao menu",
+        "sections": [
+            {
+                "title": "Sistemas Disponíveis",
+                "rows": [
+                    {
+                        "title": "Windows",
+                        "description": "Instalador para PC e Notebook",
+                        "rowId": "575e4941-ef89-4fa4-871f-794ac3234607"
+                    },
+                    {
+                        "title": "MAC (Apple)",
+                        "description": "Instalador para MacBook e iMac",
+                        "rowId": "c6bdf699-c14d-4442-9a8b-83b7f1f79446"
+                    },
+                    {
+                        "title": "Linux",
+                        "description": "Para sistema Linux",
+                        "rowId": "52cb8b7e-17d2-4c40-8789-6596dde64535"
+                    }
+                ]
+            }
+        ]
+    },
+    "list_message_replies": [
+        {
+            "row_id": "575e4941-ef89-4fa4-871f-794ac3234607",
+            "reply_type": "text",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1
+        },
+        {
+            "row_id": "c6bdf699-c14d-4442-9a8b-83b7f1f79446",
+            "reply_type": "text",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1
+        },
+        {
+            "row_id": "52cb8b7e-17d2-4c40-8789-6596dde64535",
+            "reply_type": "text",
+            "reply_text": "Tudo pronto! 🐧 Siga estes passos no seu Linux:\r\n\r\n1️⃣ No navegador do seu PC, digite exatamente este link para baixar:\r\n🔗 https:\/\/dl.explouddev.com\/nplayerlinux\r\n\r\n2️⃣ Dê permissão de execução ao arquivo baixado e instale o pacote. 📥\r\n3️⃣ Use o **Usuário** e **Senha** cadastrados no Gestor para logar.\r\n\r\n**Bom entretenimento!** 🍿🎬\r\n\r\n---\r\n↩️ **Dúvidas ou Menu Principal? Digite 9.**",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1
+        }
+    ]
+}

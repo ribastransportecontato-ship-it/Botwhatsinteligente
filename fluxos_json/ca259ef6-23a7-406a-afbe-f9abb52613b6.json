@@ -1,0 +1,55 @@
+{
+    "id": 137831,
+    "keyword": "proximo apos a mac",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "list_message": {
+        "title": "Avançar",
+        "description": "Localizou o *mac* e o *Key*?",
+        "buttonText": "Podemos continuar?",
+        "footerText": "",
+        "sections": [
+            {
+                "title": "Avançar?",
+                "rows": [
+                    {
+                        "title": "Sim",
+                        "description": "Se esta tudo certo!",
+                        "rowId": "0ecde307-6a43-44ce-8796-ca9c480a9731"
+                    },
+                    {
+                        "title": "Não",
+                        "description": "se não localizou o mac!",
+                        "rowId": "22c212b0-7ff1-46da-a56f-b8ac40869a2c"
+                    }
+                ]
+            }
+        ]
+    },
+    "list_message_replies": [
+        {
+            "row_id": "0ecde307-6a43-44ce-8796-ca9c480a9731",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 137828,
+            "nested_reply_keyword": "BOTIBO"
+        },
+        {
+            "row_id": "22c212b0-7ff1-46da-a56f-b8ac40869a2c",
+            "reply_type": "text",
+            "reply_text": "Aguarde um Atendente vai te atende-lo!",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1
+        }
+    ]
+}

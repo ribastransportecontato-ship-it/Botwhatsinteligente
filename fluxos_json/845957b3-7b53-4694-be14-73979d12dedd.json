@@ -1,0 +1,69 @@
+{
+    "id": 137828,
+    "keyword": "BOTIBO",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "replies": [
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "*PREENCHENDO O SISTEMA*",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "1️⃣ CLIQUE EM ASSINANTE: Logo no topo do site, clique no botão azul escrito ASSINANTE. 👤",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "2️⃣ DADOS DO APARELHO: Coloque o MAC ADDRESS e a DEVICE KEY que estão aparecendo na tela da sua TV nos campos indicados. 📺",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "3️⃣ SEUS DADOS: Nos campos debaixo, digite o USUÁRIO IPTV e a SENHA IPTV que eu te enviei aqui no WhatsApp. 📝",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "4️⃣ FINALIZAR: Clique no botão azul REATIVAR CADASTRO e aguarde o sistema terminar o processo sozinho. Pronto! ✅\r\n\r\n*DICA* ENQUANTO O SISTEMA FINALIZA O PROCESSO DESLIGUE SUA TV SE POSSÍVEL DA TOMADA ASSIM O APP AO ABRIR ESTARÁ LIMPO O CACHE!",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "nested_list",
+            "delay": "1",
+            "reply": null,
+            "url": null,
+            "url_method": "POST",
+            "nested_reply_id": null,
+            "nested_list_id": "137832"
+        }
+    ]
+}

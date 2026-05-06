@@ -1,0 +1,20 @@
+{
+    "id": 123721,
+    "keyword": "IPTV SMARTERS",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "replies": [
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "🔥 Tutorial: IPTV SMARTERS\r\n📖 COMO CONFIGURAR O IPTV SMARTERS:\r\n\r\n1️⃣ Abra o aplicativo e clique em ADD NEW USER ➕\r\n2️⃣ Escolha a opção Login with Xtream Codes API 🔌\r\n3️⃣ Preencha os campos exatamente assim:\r\n👉 Any Name: Coloque qualquer nome (Ex: TV)\r\n👤 Username: \"seu usuário\"\r\n🔒 Password: \"sua senha\"\r\n🟠 URL: http:\/\/channell.top\r\n4️⃣ Clique em ADD USER e pronto! 🚀\r\n\r\n⚠️ Não tem usuário e senha? Peça agora ao suporte! 👩‍💻\r\n🔙 Digite 9 para voltar ao menu anterior.",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        }
+    ]
+}

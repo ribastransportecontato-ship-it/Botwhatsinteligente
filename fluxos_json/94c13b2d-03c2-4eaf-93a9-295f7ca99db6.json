@@ -1,0 +1,40 @@
+{
+    "id": 139568,
+    "keyword": "Primeiro pagamento!",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "replies": [
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "💳 **TUTORIAL PARA PRIMEIRO PAGAMENTO**\r\n\r\nPara oficializar sua assinatura e continuar com todo o conforto da Imperium TV, siga esses passos simples:\r\n\r\n1️⃣ **ACESSO:** Entre no nosso painel de controle.\r\n\r\nhttps:\/\/gestorv3.pro\/imperiumtv\/central\r\n\r\n2️⃣ **LOGIN:** Digite o seu **Usuário IPTV** e sua **Senha IPTV**.\r\n3️⃣ **SEGURANÇA:** Marque a caixinha **\"Não sou um robô\"** e clique em **Entrar**. 🚪🔐",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "4️⃣ **CONTRATAR:** Assim que o painel abrir, clique no botão verde escrito **\"CONTRATAR UM PLANO +\"**. 🟢\r\n\r\n5️⃣ **SELEÇÃO:** Escolha o mesmo plano que você utilizou no teste:\r\n✅ **MULTI-SERVER MENSAL C\/ ADULTOS** (R$ 12,90)\r\n✅ **MULTI-SERVER MENSAL S\/ ADULTOS** (R$ 12,90)\r\n\r\n⚠️ ATENÇÃO A ATIVAÇÃO ANUAL DO APLICATIVO JÁ É LANÇADA SOMENTE NA PRIMEIRA FATURA!\r\n\r\nClique em **\"Escolher\"** no plano desejado. 📑✨",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "6️⃣ **PAGAMENTO:** O sistema vai gerar a sua fatura automaticamente. 🧾\r\n\r\n🚀 **LIBERAÇÃO INSTANTÂNEA:**\r\nAssim que você realizar o pagamento (via Pix ou cartão), o sistema reconhece na hora e o seu sinal é liberado imediatamente, sem precisar enviar comprovante!\r\n\r\nImperium TV - Autonomia e facilidade para você! 💎👑",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        }
+    ]
+}

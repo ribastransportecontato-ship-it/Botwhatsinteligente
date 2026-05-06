@@ -1,0 +1,30 @@
+{
+    "id": 137837,
+    "keyword": "TERMOS",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "replies": [
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "⚠️ AVISO IMPORTANTE SOBRE O APLICATIVO:\r\n\r\nInformamos que os aplicativos IB PLAYER PRO e NETPLAY são ferramentas pagas para garantir máxima estabilidade e zero travamentos.\r\n\r\n✅ PERÍODO DE TESTE: O uso dos aplicativos é TOTALMENTE GRATUITO durante o seu teste.\r\n\r\n🚀 DIFERENCIAL DE AUTONOMIA: No IB PLAYER PRO, adicionamos 5 LISTAS de reprodução diferentes. Se um servidor falhar ou travar, você mesmo troca a lista na hora, sem depender do suporte! O mesmo vale para o NETPLAY.\r\n\r\n• TAXA DOS APLICATIVOS: R$ 15,00 (Pagamento ANUAL). Cobrado apenas se você decidir assinar após o teste.\r\n\r\n• COBRANÇA: Valor por DISPOSITIVO (exceto Netplay, que é por LOGIN).\r\n\r\n• OBSERVAÇÃO: Este valor NÃO faz parte da mensalidade; é a licença da ferramenta para uso por 1 ano sem propagandas.\r\n\r\nPodemos prosseguir com seu teste grátis e configurar suas 5 listas? 👍",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "nested_reply",
+            "delay": "1",
+            "reply": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": "137838",
+            "nested_list_id": null
+        }
+    ]
+}

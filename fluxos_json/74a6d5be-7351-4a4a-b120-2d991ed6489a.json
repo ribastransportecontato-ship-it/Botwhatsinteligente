@@ -1,0 +1,55 @@
+{
+    "id": 137830,
+    "keyword": "sansung depois da regiao",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "list_message": {
+        "title": "Resultado da configuração!",
+        "description": "Selecione o resultado da troca de regiao!",
+        "buttonText": "Resultado",
+        "footerText": "resultado",
+        "sections": [
+            {
+                "title": "Encontrou agora o App?",
+                "rows": [
+                    {
+                        "title": "Sim",
+                        "description": null,
+                        "rowId": "36fa7333-92fa-47ab-a497-04de9b33a6d5"
+                    },
+                    {
+                        "title": "Não",
+                        "description": null,
+                        "rowId": "a2070879-1b85-4f32-922c-6fe97c1c4d1e"
+                    }
+                ]
+            }
+        ]
+    },
+    "list_message_replies": [
+        {
+            "row_id": "36fa7333-92fa-47ab-a497-04de9b33a6d5",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 137820,
+            "nested_reply_keyword": "localizando mac ib"
+        },
+        {
+            "row_id": "a2070879-1b85-4f32-922c-6fe97c1c4d1e",
+            "reply_type": "text",
+            "reply_text": "Aguarde que um atendente vai atende-lo!",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1
+        }
+    ]
+}

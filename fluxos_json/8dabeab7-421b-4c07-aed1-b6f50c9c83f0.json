@@ -1,0 +1,57 @@
+{
+    "id": 137833,
+    "keyword": "localizou o ib lg",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "list_message": {
+        "title": "Achou o app?",
+        "description": "Vamos avançar!",
+        "buttonText": "Encontrou o APP?",
+        "footerText": "confimação da localização do app!",
+        "sections": [
+            {
+                "title": "Encontrou o APP?",
+                "rows": [
+                    {
+                        "title": "Sim",
+                        "description": "Para continuar a Ativação!",
+                        "rowId": "f284e156-6deb-4890-8b24-c57065bfc150"
+                    },
+                    {
+                        "title": "Não",
+                        "description": "se não localizou o APP!",
+                        "rowId": "89e42af7-8dbe-45cb-97fc-b19c702a0473"
+                    }
+                ]
+            }
+        ]
+    },
+    "list_message_replies": [
+        {
+            "row_id": "f284e156-6deb-4890-8b24-c57065bfc150",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 137820,
+            "nested_reply_keyword": "localizando mac ib"
+        },
+        {
+            "row_id": "89e42af7-8dbe-45cb-97fc-b19c702a0473",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 137834,
+            "nested_reply_keyword": "regiao LG"
+        }
+    ]
+}

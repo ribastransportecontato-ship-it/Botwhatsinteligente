@@ -1,0 +1,57 @@
+{
+    "id": 137839,
+    "keyword": "com adulto ou sem adulto",
+    "match_type": "equal",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "list_message": {
+        "title": "ESCOLHA SEU TESTE GRÁTIS",
+        "description": "Seja bem-vindo! Para começarmos, escolha abaixo qual o tipo de conteúdo você prefere testar no seu aparelho:",
+        "buttonText": "CLIQUE AQUI",
+        "footerText": "Selecione uma opção abaixo para gerar seu login.",
+        "sections": [
+            {
+                "title": "ESCOLHA SEU TESTE GRÁTIS",
+                "rows": [
+                    {
+                        "title": "🔞 LISTA COMPLETA",
+                        "description": "Canais, Filmes e Séries + Conteúdo Adulto.",
+                        "rowId": "70fc1f80-8fe3-4050-a346-3994baaf57d7"
+                    },
+                    {
+                        "title": "✅ LISTA FAMÍLIA",
+                        "description": "Lista limpa, sem conteúdo para maiores de 18 anos.",
+                        "rowId": "19b2da3d-a539-4e5e-8406-4e9acb737461"
+                    }
+                ]
+            }
+        ]
+    },
+    "list_message_replies": [
+        {
+            "row_id": "70fc1f80-8fe3-4050-a346-3994baaf57d7",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 121302,
+            "nested_reply_keyword": "Com adulto netpaly"
+        },
+        {
+            "row_id": "19b2da3d-a539-4e5e-8406-4e9acb737461",
+            "reply_type": "nested_reply",
+            "reply_text": null,
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "url_tags": null,
+            "delay": 1,
+            "nested_reply_id": 137840,
+            "nested_reply_keyword": "sem adulto netpaly"
+        }
+    ]
+}

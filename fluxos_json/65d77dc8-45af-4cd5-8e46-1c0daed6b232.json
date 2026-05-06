@@ -1,0 +1,47 @@
+{
+    "id": 121315,
+    "keyword": "Dispositivo fire stick, tutorial firestick",
+    "match_type": "array",
+    "reply_type": "",
+    "active": true,
+    "device": null,
+    "replies": [
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "🔥 PASSO 1: Liberando a Instalação\r\n\r\nComo o Fire Stick é bloqueado de fábrica, precisamos liberar ele assim:\r\n\r\n1️⃣ Vá em Configurações (ícone da engrenagem ⚙️) na tela inicial.\r\n2️⃣ Clique em Meu Fire TV e depois em Sobre.\r\n3️⃣ ATENÇÃO: Clique no nome do seu aparelho (ex: Fire TV Stick Lite) 7 VEZES seguidas bem rápido, até aparecer a mensagem: \"Não é necessário, você já é um desenvolvedor\".\r\n4️⃣ Volte uma tela e agora verá a opção Opções de Desenvolvedor. Clique nela.\r\n5️⃣ Clique em Instalar aplicativos desconhecidos e deixe o app Downloader como ATIVADO\/ON.",
+            "url": null,
+            "url_method": "POST",
+            "url_reply": null,
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "📥 PASSO 2: Instalando o NETPLAY 🟠\r\n\r\n1️⃣ Abra o aplicativo Downloader (se não tiver, baixe na lupa de pesquisa da Amazon).\r\n2️⃣ No campo de digitação, coloque este código: 8454237 e aperte em GO.\r\n3️⃣ Se preferir, digite o link curto: http:\/\/aftv.news\/8454237\r\n4️⃣ Aguarde o download terminar e clique em INSTALAR.",
+            "url": null,
+            "url_method": "POST",
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "🔐 PASSO 3: Acesso ao Conteúdo\r\n\r\n1️⃣ Abra o app NETPLAY.\r\n2️⃣ Digite seu LOGIN e sua SENHA.\r\n3️⃣ Clique no botão ADICIONAR LISTA.\r\n4️⃣ Aguarde carregar as informações dos servidores.\r\n5️⃣ Quando terminar de carregar, clique em CONTINUAR.\r\n\r\n⚠️ IMPORTANTE: Se você ainda não tem seu login e senha, peça agora mesmo ao nosso suporte!",
+            "url": null,
+            "url_method": "POST",
+            "nested_reply_id": null,
+            "nested_list_id": null
+        },
+        {
+            "reply_type": "text",
+            "delay": "1",
+            "reply": "🚀 PRONTO!\r\nO NETPLAY já está configurado no seu Fire Stick. Agora é só relaxar e assistir! 🍿\r\n\r\n⬅️ Para voltar ao Menu Principal, digite 9.",
+            "url": null,
+            "url_method": "POST",
+            "nested_reply_id": null,
+            "nested_list_id": null
+        }
+    ]
+}
