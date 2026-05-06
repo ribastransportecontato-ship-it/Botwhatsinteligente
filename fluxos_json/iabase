@@ -1,0 +1,83 @@
+{
+  "flows": [
+    {
+      "id": 121298,
+      "keyword": "Teste grátis, INSTALAR",
+      "match_type": "array",
+      "list_message": {
+        "title": "Selecione seu Aparelho 📺",
+        "description": "Selecione o aparelho para instalar o aplicativo.",
+        "sections": [
+          {
+            "title": "Escolher Dispositivo",
+            "rows": [
+              { "title": "📱 Celular", "rowId": "b0426e07-7a58-4c42-9a1b-cbfb8ba3b839" },
+              { "title": "📺 Smart TV Samsung", "rowId": "ab63c896-7234-4638-887e-678df011df23" },
+              { "title": "📺 Smart TV LG", "rowId": "7e26f60c-c73a-4cc4-aa3e-125d85173c18" },
+              { "title": "📺 TV Roku", "rowId": "200dc10c-f376-4d05-950c-e2f75a6cc364" },
+              { "title": "📺 Android TV / TV Box", "rowId": "c8bbc3af-bf6e-484e-a36a-813ae2d79d76" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 121307,
+      "keyword": "Dispositivo roku",
+      "replies": [
+        { "reply": "📦 *PASSO 1: LOCALIZAR E INSTALAR NA ROKU*" },
+        { "reply": "1️⃣ TELA INICIAL: Aperte o botão HOME 🏠." },
+        { "reply": "2️⃣ PESQUISAR: Vá em PESQUISAR e digite o nome do app 🔍." },
+        { "reply": "3️⃣ ADICIONAR CANAL: Clique em ADICIONAR CANAL e aguarde 🚀." }
+      ]
+    },
+    {
+      "id": 137843,
+      "keyword": "SUPORTE RÁPIDO",
+      "list_message": {
+        "title": "CENTRAL DE SUPORTE RÁPIDO 🛠️",
+        "rows": [
+          { "title": "IB PLAYER PRO", "rowId": "e6b235c6-e8f4-4068-b4e4-473bb12ed0f7" },
+          { "title": "🎬 NETPLAY", "rowId": "503290a0-6766-46b8-981e-acff8ba2b340" }
+        ]
+      }
+    },
+    {
+      "id": 121310,
+      "keyword": "Dispositivo tv Android",
+      "replies": [
+        { "reply": "Passo 1: Instale o app 'Downloader' na Play Store." },
+        { "reply": "Passo 2: Use o código 8454237 para baixar o Netplay." }
+      ]
+    },
+    {
+      "id": 139568,
+      "keyword": "Primeiro pagamento!",
+      "replies": [
+        { "reply": "💳 *TUTORIAL PARA PRIMEIRO PAGAMENTO*" },
+        { "reply": "Acesse: https://gestorv3.pro/imperiumtv/central" }
+      ]
+    },
+    {
+      "id": 137837,
+      "keyword": "TERMOS",
+      "replies": [
+        { "reply": "⚠️ AVISO: Os apps IB PLAYER PRO e NETPLAY possuem taxa anual de R$ 15,00 após o teste." }
+      ]
+    },
+    {
+      "id": 137841,
+      "keyword": "TROCAR PLAYLIST IB",
+      "replies": [
+        { "reply": "1️⃣ Vá em CHANGE PLAYLIST. 2️⃣ Escolha de IMPTV1 a IMPTV5." }
+      ]
+    },
+    {
+      "id": 121302,
+      "keyword": "Com adulto netpaly",
+      "replies": [
+        { "reply_type": "url", "url": "https://netplay.mplll.com/api/chatbot/ANKWPy01PR/bOxLA7yWZ7" }
+      ]
+    }
+  ]
+}
