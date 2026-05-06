@@ -6,10 +6,14 @@ from google import genai
 # Puxa a chave do Environment do Render
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-# Inicializa o cliente moderno (Versão 2026)
-client = genai.Client(api_key=GOOGLE_API_KEY)
+# --- O PULO DO GATO ESTÁ AQUI ---
+# Forçamos a API_VERSION para 'v1' para evitar o erro 404 da v1beta
+client = genai.Client(
+    api_key=GOOGLE_API_KEY,
+    http_options={'api_version': 'v1'}
+)
 
-st.set_page_config(page_title="Imperium Bot - Gemini", layout="wide")
+st.set_page_config(page_title="Imperium Bot - Gemini Stable", layout="wide")
 
 class ImperiumCerebro:
     def __init__(self):
@@ -17,17 +21,15 @@ class ImperiumCerebro:
 
     def carregar_arquivos(self):
         textos = []
-        # Carrega os seus 48 arquivos JSON
         if os.path.exists("fluxos_json"):
             for arquivo in os.listdir("fluxos_json"):
                 if arquivo.endswith(".json"):
                     try:
                         with open(f"fluxos_json/{arquivo}", 'r', encoding='utf-8') as f:
                             dados = json.load(f)
-                            textos.append(f"APP: {arquivo}\nGUIA: {json.dumps(dados, ensure_ascii=False)}")
+                            textos.append(f"APP: {arquivo}\nCONTEUDO: {json.dumps(dados, ensure_ascii=False)}")
                     except: pass
         
-        # Carrega Manuais TXT
         if os.path.exists("base_conhecimento"):
             for arquivo in os.listdir("base_conhecimento"):
                 if arquivo.endswith(".txt"):
@@ -46,7 +48,7 @@ def iniciar_ia():
 
 bot = iniciar_ia()
 
-st.title("🤖 Imperium Bot (Gemini 1.5)")
+st.title("🤖 Imperium Bot (Versão Estável 2026)")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -55,21 +57,22 @@ for m in st.session_state.messages:
     with st.chat_message(m["role"]):
         st.markdown(m["content"])
 
-if prompt := st.chat_input("Como posso te ajudar?"):
+if prompt := st.chat_input("Como posso ajudar?"):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
         contexto_completo = f"""
-        Você é o atendente da Imperium TV. Use este conhecimento:
+        Você é o atendente da Imperium TV.
+        Use este conhecimento para ajudar o cliente:
         {bot.conhecimento_total}
         
-        Pergunta do cliente: {prompt}
+        Pergunta: {prompt}
         """
 
         try:
-            # A chamada moderna que não usa v1beta
+            # Chamada usando o modelo estável
             response = client.models.generate_content(
                 model="gemini-1.5-flash",
                 contents=contexto_completo
@@ -81,5 +84,3 @@ if prompt := st.chat_input("Como posso te ajudar?"):
             
         except Exception as e:
             st.error(f"Erro na IA: {e}")
-
-st.sidebar.success("Sistema Conectado!")
