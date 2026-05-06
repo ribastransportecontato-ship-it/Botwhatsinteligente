@@ -4,16 +4,16 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# --- CONFIGURAÇÃO DE SEGURANÇA ---
-# Estas chaves devem estar no painel 'Environment' do Render
+# --- CONFIGURAÇÃO ---
 APP_KEY = os.environ.get("BOTBOT_APP_KEY")
 AUTH_KEY = os.environ.get("BOTBOT_AUTH_KEY")
 API_URL = "https://botbot.chat/api/v2/sendText"
 
+# ⚠️ COLOQUE O NÚMERO DO SEU BOT AQUI PARA EVITAR LOOPS
+MEU_NUMERO_BOT = "554488214771" 
+
 def enviar_mensagem_botbot(numero, texto):
-    """ Envia a resposta técnica via API v2 do BotBot """
     if not APP_KEY or not AUTH_KEY:
-        print("ERRO: Chaves não configuradas no Render!")
         return None
 
     headers = {
@@ -22,8 +22,12 @@ def enviar_mensagem_botbot(numero, texto):
         "Content-Type": "application/json"
     }
 
-    # Remove o @c.us caso o número venha formatado do WhatsApp
     numero_limpo = numero.split('@')[0]
+
+    # TRAVA DE SEGURANÇA: Não envia mensagem para si mesmo
+    if numero_limpo == MEU_NUMERO_BOT:
+        print(f"Abortando: Tentativa de enviar mensagem para o próprio bot.")
+        return None
 
     payload = {
         "to": numero_limpo,
@@ -41,48 +45,41 @@ def enviar_mensagem_botbot(numero, texto):
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    """ Recebe as mensagens do BotBot """
     data = request.get_json()
     if not data:
         return jsonify({"status": "no_data"}), 400
         
     msg_cliente = data.get('message', '').lower().strip()
-    numero_cliente = data.get('from', '')
+    numero_raw = data.get('from', '')
+    numero_cliente = numero_raw.split('@')[0]
 
-    if not msg_cliente or not numero_cliente:
-        return jsonify({"status": "ignored"}), 200
+    # --- TRAVA ANTI-LOOP ---
+    # Se o número de quem enviou for o número do BOT, ignora totalmente.
+    if numero_cliente == MEU_NUMERO_BOT:
+        return jsonify({"status": "loop_prevented"}), 200
 
     resposta = ""
 
-    # --- LÓGICA DE ATENDIMENTO (PALAVRAS-CHAVE) ---
-    if any(p in msg_cliente for p in ["travando", "lento", "trava", "parando"]):
-        if "ib" in msg_cliente or "ibo" in msg_cliente:
-            resposta = "🔄 *SUPORTE IB PLAYER:* Clique em 'Change Playlist' e alterne entre IMPTV1 e IMPTV5."
-        elif "netplay" in msg_cliente:
-            resposta = "🟢 *SUPORTE NETPLAY:* Reinsira o seu utilizador/palavra-passe no canto inferior e clique em ENTRAR."
-        else:
-            resposta = "🛠️ *SUPORTE:* Qual aplicação utiliza? *IB PLAYER* ou *NETPLAY*?"
+    # LÓGICA DE ATENDIMENTO
+    if any(p in msg_cliente for p in ["travando", "lento", "trava"]):
+        resposta = "🔄 *SUPORTE:* Se estiver no IB Player, mude a Playlist em 'Change Playlist'. No Netplay, refaça o login."
     
-    elif any(p in msg_cliente for p in ["instalar", "baixar", "codigo", "downloader"]):
-        resposta = "📺 *INSTALAÇÃO:* No ecrã inicial da sua TV, abra a aplicação *Downloader* e use o código: *8454237*."
+    elif any(p in msg_cliente for p in ["instalar", "baixar", "codigo"]):
+        resposta = "📺 *INSTALAÇÃO:* No app Downloader, use o código: *8454237*."
 
-    elif any(p in msg_cliente for p in ["oi", "olá", "ola", "bom dia", "boa tarde"]):
-        resposta = (
-            "🤖 *Olá! Sou o assistente da Imperium TV.*\n\n"
-            "Como posso ajudar?\n"
-            "1. Suporte para *Travamento*\n"
-            "2. Como *Instalar* o app\n"
-            "3. Consultar *Vencimento*"
-        )
+    elif any(p in msg_cliente for p in ["oi", "olá", "ola", "bom dia"]):
+        resposta = "🤖 *Olá! Sou o assistente da Imperium TV.*\nComo posso ajudar?\n1. *Travamento*\n2. *Instalar* o app"
 
-    # --- RESPOSTA PADRÃO ---
-    if not resposta:
-        resposta = "🤔 Não entendi bem. Digite *Travando* para suporte ou *Instalar* para baixar o aplicativo."
-
-    enviar_mensagem_botbot(numero_cliente, resposta)
-    return jsonify({"status": "success"}), 200
+    # Se tiver resposta e NÃO for o próprio bot, envia.
+    if resposta:
+        enviar_mensagem_botbot(numero_cliente, resposta)
+        return jsonify({"status": "success"}), 200
+    
+    # Se não entendeu, só responde se for um humano (não o bot)
+    # Para evitar loops, vamos desativar a resposta padrão por enquanto 
+    # ou garantir que ela só saia para números diferentes do bot.
+    return jsonify({"status": "ignored"}), 200
 
 if __name__ == '__main__':
-    # Porta padrão para o Render
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
