@@ -3,7 +3,7 @@ import os
 import json
 from groq import Groq
 
-# Sua chave da Groq configurada
+# Busca a chave nas variáveis de ambiente do Render (Seguro)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 # Inicializa o cliente da Groq
@@ -25,7 +25,6 @@ class ImperiumSistema:
                     try:
                         with open(f"fluxos_json/{arquivo}", 'r', encoding='utf-8') as f:
                             dados = json.load(f)
-                            # Extrai o texto importante do JSON para a IA
                             texto = f"Tutorial: {arquivo}. Conteúdo: {json.dumps(dados, ensure_ascii=False)}"
                             conteudo_acumulado.append(texto)
                     except:
@@ -55,46 +54,36 @@ bot_motor = preparar_bot()
 st.title("🤖 Imperium Bot - Atendimento Humano")
 st.info("Sistema Inteligente alimentado por seus tutoriais do GitHub.")
 
-# Gerenciamento do Chat
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# Exibe as mensagens anteriores
 for msg in st.session_state.chat_history:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
-# Entrada do usuário
 if usuario_pergunta := st.chat_input("Como posso te ajudar agora?"):
     st.session_state.chat_history.append({"role": "user", "content": usuario_pergunta})
     with st.chat_message("user"):
         st.markdown(usuario_pergunta)
 
     with st.chat_message("assistant"):
-        # O "Prompt" que ensina a IA a ser o seu atendente
         prompt_sistema = f"""
-        Você é o Imperium Bot, um atendente humano, educado e prestativo da Imperium TV.
-        Seu objetivo é resolver dúvidas sobre aplicativos (IB Player, Netplay, etc) usando a base de conhecimento abaixo.
-        
-        REGRAS:
-        1. Fale de forma natural, como se estivesse no WhatsApp.
-        2. Se a solução estiver nos manuais abaixo, explique o passo a passo.
-        3. Se não souber, diga gentilmente que vai chamar o suporte humano.
+        Você é o Imperium Bot, um atendente humano da Imperium TV.
+        Use a base abaixo para dar soluções técnicas. Fale de forma natural.
         
         BASE DE CONHECIMENTO:
         {bot_motor.base_conhecimento}
         """
 
         try:
-            # Chamada para a Groq (Llama 3 - Rápido e Estável)
+            # ATUALIZADO: Usando o modelo Llama 3.1 (ou 3.3) que substituiu o 8b antigo
             completion = client.chat.completions.create(
-                model="llama3-8b-8192",
+                model="llama-3.1-8b-instant", # Modelo estável para 2026
                 messages=[
-                    {"role": "system", "content": prompt_sistema},
-                    {"role": "user", "content": usuario_pergunta}
+                    {"role": "system", "content": "Você é um assistente prestativo."},
+                    {"role": "user", "content": f"{prompt_sistema}\n\nPergunta: {usuario_pergunta}"}
                 ],
                 temperature=0.7,
-                max_tokens=2048
             )
             
             resposta_final = completion.choices[0].message.content
@@ -104,7 +93,5 @@ if usuario_pergunta := st.chat_input("Como posso te ajudar agora?"):
         except Exception as e:
             st.error(f"Erro na conexão: {e}")
 
-# Lateral com contadores
 st.sidebar.title("Status")
-st.sidebar.success("Cérebro carregado com sucesso!")
-st.sidebar.write("A IA está usando seus arquivos JSON e TXT para aprender.")
+st.sidebar.success("Cérebro carregado!")
