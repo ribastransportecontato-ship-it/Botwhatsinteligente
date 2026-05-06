@@ -6,14 +6,10 @@ from google import genai
 # Puxa a chave do Environment do Render
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-# --- O PULO DO GATO ESTÁ AQUI ---
-# Forçamos a API_VERSION para 'v1' para evitar o erro 404 da v1beta
-client = genai.Client(
-    api_key=GOOGLE_API_KEY,
-    http_options={'api_version': 'v1'}
-)
+# Inicializa o cliente
+client = genai.Client(api_key=GOOGLE_API_KEY)
 
-st.set_page_config(page_title="Imperium Bot - Gemini Stable", layout="wide")
+st.set_page_config(page_title="Imperium Bot - Final", layout="wide")
 
 class ImperiumCerebro:
     def __init__(self):
@@ -27,17 +23,8 @@ class ImperiumCerebro:
                     try:
                         with open(f"fluxos_json/{arquivo}", 'r', encoding='utf-8') as f:
                             dados = json.load(f)
-                            textos.append(f"APP: {arquivo}\nCONTEUDO: {json.dumps(dados, ensure_ascii=False)}")
+                            textos.append(f"APP: {arquivo}\nGUIA: {json.dumps(dados, ensure_ascii=False)}")
                     except: pass
-        
-        if os.path.exists("base_conhecimento"):
-            for arquivo in os.listdir("base_conhecimento"):
-                if arquivo.endswith(".txt"):
-                    try:
-                        with open(f"base_conhecimento/{arquivo}", 'r', encoding='utf-8') as f:
-                            textos.append(f"MANUAL: {f.read()}")
-                    except: pass
-        
         self.conhecimento_total = "\n\n---\n\n".join(textos)
 
 @st.cache_resource
@@ -48,7 +35,18 @@ def iniciar_ia():
 
 bot = iniciar_ia()
 
-st.title("🤖 Imperium Bot (Versão Estável 2026)")
+# --- FUNÇÃO PARA DESCOBRIR O NOME DO MODELO ---
+def get_model_name():
+    try:
+        # Lista os modelos disponíveis na sua conta
+        for m in client.models.list():
+            if 'generateContent' in m.supported_methods and 'flash' in m.name:
+                return m.name # Retorna o primeiro Flash que encontrar (ex: models/gemini-1.5-flash-002)
+        return "gemini-1.5-flash" # Fallback
+    except:
+        return "gemini-1.5-flash"
+
+st.title("🤖 Imperium Bot - Inteligência Ativa")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -63,18 +61,19 @@ if prompt := st.chat_input("Como posso ajudar?"):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        contexto_completo = f"""
-        Você é o atendente da Imperium TV.
-        Use este conhecimento para ajudar o cliente:
-        {bot.conhecimento_total}
-        
-        Pergunta: {prompt}
-        """
-
         try:
-            # Chamada usando o modelo estável
+            # Descobre o nome que o Google quer usar hoje
+            modelo_ativo = get_model_name()
+            
+            contexto_completo = f"""
+            Você é o atendente da Imperium TV. Use este guia:
+            {bot.conhecimento_total}
+            
+            Pergunta: {prompt}
+            """
+
             response = client.models.generate_content(
-                model="gemini-1.5-flash",
+                model=modelo_ativo,
                 contents=contexto_completo
             )
             
@@ -84,3 +83,5 @@ if prompt := st.chat_input("Como posso ajudar?"):
             
         except Exception as e:
             st.error(f"Erro na IA: {e}")
+
+st.sidebar.info(f"Modelo sendo usado: {get_model_name()}")
