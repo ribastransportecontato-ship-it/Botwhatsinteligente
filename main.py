@@ -1,71 +1,92 @@
 import streamlit as st
 import os
 import json
-from groq import Groq
+import google.generativeai as genai
 
-# Busca a chave nas variáveis de ambiente do Render
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-client = Groq(api_key=GROQ_API_KEY)
+# Puxa a chave do Render (Seguro)
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-st.set_page_config(page_title="Imperium Bot", layout="wide")
+# Configura o Gemini para usar a versão estável v1
+genai.configure(api_key=GOOGLE_API_KEY)
 
-class ImperiumSistema:
+st.set_page_config(page_title="Imperium Bot - Gemini", layout="wide")
+
+class ImperiumCerebro:
     def __init__(self):
-        self.lista_temas = ""
+        self.conhecimento_total = ""
 
-    def carregar_dados(self):
-        temas = []
+    def carregar_arquivos(self):
+        textos = []
+        # Carrega os 48 arquivos JSON
         if os.path.exists("fluxos_json"):
-            arquivos = [f for f in os.listdir("fluxos_json") if f.endswith(".json")]
-            for arquivo in arquivos:
-                # Mandamos apenas o nome do arquivo para a IA saber que o manual existe
-                nome_limpo = arquivo.replace(".json", "").replace("_", " ")
-                temas.append(nome_limpo)
+            for arquivo in os.listdir("fluxos_json"):
+                if arquivo.endswith(".json"):
+                    try:
+                        with open(f"fluxos_json/{arquivo}", 'r', encoding='utf-8') as f:
+                            dados = json.load(f)
+                            textos.append(f"ARQUIVO: {arquivo}\nCONTEÚDO: {json.dumps(dados, ensure_ascii=False)}")
+                    except:
+                        pass
         
-        # Criamos um índice curto em vez de mandar o texto todo
-        self.lista_temas = ", ".join(temas)
+        # Carrega Manuais TXT
+        if os.path.exists("base_conhecimento"):
+            for arquivo in os.listdir("base_conhecimento"):
+                if arquivo.endswith(".txt"):
+                    try:
+                        with open(f"base_conhecimento/{arquivo}", 'r', encoding='utf-8') as f:
+                            textos.append(f"MANUAL: {f.read()}")
+                    except:
+                        pass
+        
+        self.conhecimento_total = "\n\n---\n\n".join(textos)
 
 @st.cache_resource
-def preparar_bot():
-    obj = ImperiumSistema()
-    obj.carregar_dados()
+def iniciar_ia():
+    obj = ImperiumCerebro()
+    obj.carregar_arquivos()
     return obj
 
-bot_motor = preparar_bot()
+bot = iniciar_ia()
 
-st.title("🤖 Imperium Bot")
+st.title("🤖 Imperium Bot (Gemini 1.5 Flash)")
 
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
-for msg in st.session_state.chat_history:
-    with st.chat_message(msg["role"]):
-        st.markdown(msg["content"])
+for m in st.session_state.messages:
+    with st.chat_message(m["role"]):
+        st.markdown(m["content"])
 
-if usuario_pergunta := st.chat_input("Como posso ajudar?"):
-    st.session_state.chat_history.append({"role": "user", "content": usuario_pergunta})
+if prompt := st.chat_input("Como posso te ajudar?"):
+    st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
-        st.markdown(usuario_pergunta)
+        st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        try:
-            # Mandamos apenas a lista de manuais disponíveis
-            prompt_curto = f"""Você é o atendente da Imperium TV. 
-            Você tem manuais sobre: {bot_motor.lista_temas}.
-            Responda de forma humana. Se o cliente pedir um tutorial, tente explicar baseado no nome do tema ou peça para ele ser específico."""
+        # O Gemini 1.5 aguenta esse volume de texto tranquilamente
+        instrucao = f"""
+        Você é o atendente humano da Imperium TV. 
+        Seu tom deve ser amigável, prestativo e claro.
+        
+        Use as informações abaixo para responder tecnicamente ao cliente.
+        Se a informação não estiver na base, diga que vai verificar com o suporte.
+        
+        BASE DE CONHECIMENTO COMPLETA:
+        {bot.conhecimento_total}
+        """
 
-            completion = client.chat.completions.create(
-                model="llama-3.1-8b-instant",
-                messages=[
-                    {"role": "system", "content": prompt_curto},
-                    {"role": "user", "content": usuario_pergunta}
-                ],
-                temperature=0.7,
-            )
+        try:
+            # Forçamos o modelo 1.5 Flash
+            model = genai.GenerativeModel('gemini-1.5-flash')
             
-            resposta_final = completion.choices[0].message.content
-            st.markdown(resposta_final)
-            st.session_state.chat_history.append({"role": "assistant", "content": resposta_final})
+            # Criamos o chat com o contexto
+            response = model.generate_content([instrucao, prompt])
+            
+            resposta_texto = response.text
+            st.markdown(resposta_texto)
+            st.session_state.messages.append({"role": "assistant", "content": resposta_texto})
             
         except Exception as e:
-            st.error(f"Erro: {e}")
+            st.error(f"Erro no Gemini: {e}")
+
+st.sidebar.success(f"Cérebro ativo com os arquivos do GitHub!")
